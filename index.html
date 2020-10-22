@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Components</title>
+</head>
+<body>
+  <div class="container">
+    <test-this>
+      Let's have some different text!
+    </test-this>
+    <test-that>
+      <span slot="title">eeee</span>
+      Let's have some different text!
+      
+    </test-that>
+    <some-other-test>Let's have some different text!</some-other-test>
+  </div>
+  <script src="dom.js"></script>
+  <script>
+    DOM.shadow('test-this',`
+
+<style>
+
+</style>
+
+<div>
+  <h1>My Test Component</h1>
+  <slot>My default text</slot>
+</div>
+
+`);
+DOM.shadow({
+  component : 'test-that',
+  mount(component){
+    console.log(component.innerHTML)
+  },
+  template : `
+
+<style>
+
+</style>
+
+<div>
+  <h1>My Test Component 2</h1>
+  <slot>My default text</slot>
+  <slot name="title">My default text</slot>
+</div>
+
+`
+});
+DOM.shadow('some-other-test');
+
+
+  </script>
+</body>
+</html>

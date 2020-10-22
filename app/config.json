@@ -1,0 +1,9 @@
+{
+  "name" : "Webcraft",
+  "streams" : [
+    { "url" : "webcraft.php", "event" : "ping", "name" : "Server sent events demo; https://github.com/mdn/dom-examples/blob/master/server-sent-events/sse.php"  }
+  ],
+  "routes" : [
+    { "/" : "HomeController@index" }
+  ]
+}
