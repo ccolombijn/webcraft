@@ -1,3 +1,3 @@
-import { API } from '../api.js'
-const api = new API;
-console.log('test')
+import { craft } from './webcraft.js'
+
+

@@ -1,0 +1,11 @@
+Options +FollowSymLinks -MultiViews -Indexes
+
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{DOCUMENT_ROOT}/app/$1 -f
+RewriteRule ^(.*)$ app/$1 [L]
+
+RewriteCond %{THE_REQUEST} \s/app/ [NC,OR]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L,QSA]

@@ -3,6 +3,6 @@ export class HomeController extends Controller {
     super()
   }
   index(){
-    return view('welcome','Hello world!')
+    return ('Hello world!')
   }
 }
