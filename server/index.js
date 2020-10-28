@@ -6,15 +6,15 @@ const path = require('path');
 const fs = require('fs');
 const app = express();
 const open = require('open');
-app.use(helmet());
-app.use(compression());
+const parse = require('node-html-parser').parse;
+//app.use(compression());
 
 //const config = JSON.parse(fs.readFileSync('/../app/config.json'));
 
 fs.readFile('./app/config.json', (err, data) => {
     if (err) throw err;
     let config = JSON.parse(data);
-    console.log(config)
+    //console.log(config)
     const static_dirs = config.static_dirs;
     static_dirs.forEach(dir => {
         app.use(express.static(path.join(__dirname, `/../${dir}`)));
@@ -27,8 +27,18 @@ fs.readFile('./app/config.json', (err, data) => {
     });
     */
     fs.readFile('./app/index.html', (err, html) => {
+        const root = parse(html);
+        
+        const body = root.querySelector('body');
+        
+        const head = root.querySelector('head');
+        head.appendChild('<style></style>')
+        body.appendChild('<span>test</span>')
+        body.appendChild('<script src="scripts.js" type="module"></script>');
+
         app.use('*', (req, res) => {
-            res.send(html);
+            //res.send(root.toString());
+            res.send('test')
         });
         app.listen(PORT, () =>{
             console.log(`✅  Server started: http://${HOST}:${PORT}`);
