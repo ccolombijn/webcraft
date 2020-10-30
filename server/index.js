@@ -7,6 +7,7 @@ const fs = require('fs');
 const app = express();
 const open = require('open');
 const parse = require('node-html-parser').parse;
+const templates = require('./templates.js');
 //app.use(compression());
 
 //const config = JSON.parse(fs.readFileSync('/../app/config.json'));
@@ -26,7 +27,7 @@ fs.readFile('./app/config.json', (err, data) => {
         res.sendFile(path.resolve('./dist', 'index.html'));
     });
     */
-    fs.readFile('./app/index.html', (err, html) => {
+    fs.readFile('./templates/index.html', (err, html) => {
         const root = parse(html);
         
         const body = root.querySelector('body');
@@ -35,15 +36,14 @@ fs.readFile('./app/config.json', (err, data) => {
         head.appendChild('<style></style>')
         body.appendChild('<span>test</span>')
         body.appendChild('<script src="scripts.js" type="module"></script>');
-
-        app.use('*', (req, res) => {
-            //res.send(root.toString());
-            res.send('test')
+        const output = templates(root.toString()).then((o)=>{
+            app.use('*', (req, res) => res.send(o));
+            app.listen(PORT, () =>{
+                console.log(`✅  Server started: http://${HOST}:${PORT}`);
+                open(`http://${HOST}:${PORT}`);
+            });
         });
-        app.listen(PORT, () =>{
-            console.log(`✅  Server started: http://${HOST}:${PORT}`);
-            open(`http://${HOST}:${PORT}`)
-        });
+        
     });
 
 });
