@@ -3,6 +3,9 @@
   "streams" : [
     { "url" : "webcraft.php", "event" : "ping", "name" : "Server sent events demo; https://github.com/mdn/dom-examples/blob/master/server-sent-events/sse.php"  }
   ],
+  "views" : [
+    { "welcome" : "welcome" } 
+  ],
   "routes" : [
     { "/" : { "welcome" : "HomeController@index" } }
   ],
