@@ -9,9 +9,7 @@ const open = require('open');
 const parse = require('node-html-parser').parse;
 const templates = require('./templates.js');
 //app.use(compression());
-
 //const config = JSON.parse(fs.readFileSync('/../app/config.json'));
-
 fs.readFile('./app/config.json', (err, data) => {
     if (err) throw err;
     let config = JSON.parse(data);
@@ -29,9 +27,7 @@ fs.readFile('./app/config.json', (err, data) => {
     */
     fs.readFile('./templates/index.html', (err, html) => {
         const root = parse(html);
-        
         const body = root.querySelector('body');
-        
         const head = root.querySelector('head');
         head.appendChild('<style></style>')
         body.appendChild('<span>test</span>')
