@@ -9,9 +9,11 @@ const open = require('open');
 const parse = require('node-html-parser').parse;
 const templates = require('./templates.js');
 //app.use(compression());
-//const config = JSON.parse(fs.readFileSync('/../app/config.json'));
-fs.readFile('./app/config.json', (err, data) => {
-    if (err) throw err;
+
+
+require('./config.js')((data)=>{
+//fs.readFile('./app/config.json', (err, data) => {
+    
     let config = JSON.parse(data);
     //console.log(config)
     const static_dirs = config.static_dirs;
@@ -26,19 +28,19 @@ fs.readFile('./app/config.json', (err, data) => {
     });
     */
     fs.readFile('./templates/index.html', (err, html) => {
-        const root = parse(html);
+        const root = parse(html); // HTML Parser
         const body = root.querySelector('body');
         const head = root.querySelector('head');
         head.appendChild('<style></style>')
         body.appendChild('<span>test</span>')
         body.appendChild('<script src="scripts.js" type="module"></script>');
-        const output = templates(root.toString()).then((o)=>{
+        //const output = templates(root.toString()).then((o)=>{
             app.use('*', (req, res) => res.send(o));
             app.listen(PORT, () =>{
                 console.log(`✅  Server started: http://${HOST}:${PORT}`);
                 open(`http://${HOST}:${PORT}`);
             });
-        });
+        //});
         
     });
 
